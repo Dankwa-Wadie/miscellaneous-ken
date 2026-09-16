@@ -1,0 +1,39 @@
+[Unit]
+Description=Miscellaneous Ken — discover, render and post one Short
+# Don't start before the network is actually usable. Without this the first
+# run after a reboot fails on DNS and looks like a code bug.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+WorkingDirectory=__PROJECT_DIR__
+
+# Secrets live in a 0600 file, not in the unit — units are world-readable.
+EnvironmentFile=__PROJECT_DIR__/mken.env
+
+ExecStart=__PROJECT_DIR__/.venv/bin/python3 __PROJECT_DIR__/agent.py -v
+
+# A render can take a few minutes; a wedged yt-dlp should not block the next
+# scheduled run forever.
+TimeoutStartSec=1800
+
+# Retry once on failure — most failures here are transient (a flaky download,
+# a brief network drop) and a single retry recovers them without waiting for
+# the next slot.
+Restart=on-failure
+RestartSec=120
+
+# Modest hardening. The agent only needs its own directory and the network.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=__PROJECT_DIR__
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

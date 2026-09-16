@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+
+# secrets — never commit these.
+# ".env" alone matches ONLY a file literally called .env, not mken.env, so the
+# env files need naming explicitly. The .example is safe and is meant to ship.
+client_secret.json
+token.json
+.env
+*.env
+mken.env
+cookies.txt
+!*.env.example
+
+# runtime artefacts
+work/
+out/
+state.json
+
+# Local Mac studio
+studio-secrets.json
+studio-settings.json
+studio.sqlite3*
+.pipeline.lock
+.studio.lock
+build/
+logs/

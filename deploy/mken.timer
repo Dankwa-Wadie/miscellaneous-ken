@@ -1,0 +1,22 @@
+[Unit]
+Description=Run Miscellaneous Ken three times a day
+Documentation=file:///home/ubuntu/miscellaneous-ken/README.md
+
+[Timer]
+# 09:00, 14:00 and 19:00 Africa/Accra. Accra is UTC+0 year-round (no DST),
+# so these are also the UTC times — but the explicit timezone means the
+# schedule stays correct even if the server's clock is set elsewhere.
+OnCalendar=*-*-* 09,14,19:00:00 Africa/Accra
+
+# If the box was off or asleep at the scheduled moment, run once it is back
+# rather than silently skipping the slot.
+Persistent=true
+
+# Stagger by up to 4 minutes. Nothing here is time-critical, and hitting
+# YouTube and the feeds exactly on the hour is a needlessly robotic pattern.
+RandomizedDelaySec=240
+
+Unit=mken.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,291 @@
+{
+  "account": {
+    "name": "Miscellaneous Ken",
+    "handle": "@Miscellaneous_ken",
+    "avatar": "assets/avatar.png",
+    "verified": true
+  },
+  "discovery": {
+    "_comment": "youtube_channels is the clip source. news_rss is context only - headlines go to Claude to inform its judgement, but cannot be posted (no video behind an article URL). Accepts @handles, /channel/UC... URLs, or bare UC... ids; ids skip a lookup request.",
+    "_curate_me": "Add channels here, then run: python3 agent.py --check-sources. It prints each feed's own title so you can confirm a handle resolved to the channel you meant. Prefer sources you are comfortable reposting - public-domain (NASA, NOAA, ESA) and Creative Commons channels carry far less copyright risk than commercial ones.",
+    "_licence_note": "Entries are either \"@handle\" (licence unknown - every clip from it must pass the YouTube API licence check) or {\"channel\": \"@handle\", \"licence\": \"public-domain\"|\"cc\"} to assert a licence the API cannot see. US government work is public domain by statute but still reports the default \"youtube\" licence, which is why NASA needs the explicit form.",
+    "_channel_id_note": "These are resolved UC ids rather than @handles: each handle costs an HTTP request and a fragile HTML scrape every run, and the Library of Congress has no @handle at all (it is still on a legacy /user/ URL, which is why @LibraryOfCongress 404s). Run --check-sources after editing to confirm each id is the channel you meant.",
+    "youtube_channels": [
+      {
+        "name": "NASA",
+        "channel": "UCLA_DiR1FfKNvjuUpBHmylQ",
+        "licence": "public-domain"
+      },
+      {
+        "name": "NASA JPL",
+        "channel": "UCryGec9PdUCLjpJW2mgCuLw",
+        "licence": "public-domain"
+      },
+      {
+        "name": "NOAA",
+        "channel": "UCe9IxQeBttZIYl5c43ycf9g",
+        "licence": "public-domain"
+      },
+      {
+        "name": "US Dept of the Interior",
+        "channel": "UCGwwGL-YDmX2vaxuthaKftw",
+        "licence": "public-domain"
+      },
+      {
+        "name": "US National Archives",
+        "channel": "UCnAsiniI4DF7vAAe7omWWFQ",
+        "licence": "public-domain"
+      },
+      {
+        "name": "Library of Congress",
+        "channel": "UCbObxjfi3W9YKnDS0PgadNA",
+        "licence": "public-domain"
+      }
+    ],
+    "per_channel": 8,
+    "max_age_hours": 168,
+    "news_rss": [
+      "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "https://www.theverge.com/rss/index.xml",
+      "https://feeds.arstechnica.com/arstechnica/index",
+      "https://www.sciencedaily.com/rss/top/science.xml"
+    ],
+    "per_feed": 10,
+    "require_video": true,
+    "_story_note": "Story-card sources. Wikimedia is the default: everything it returns is explicitly licensed for reuse. Reddit can supply both videos and image galleries across curated categories.",
+    "story_subreddits": [],
+    "story_min_score": 2000,
+    "subreddits": [],
+    "reddit_limit": 10,
+    "reddit_min_score": 500,
+    "reddit_posts_per_sub": 5,
+    "reddit_sort": "hot",
+    "reddit_rotate_per_category": 1,
+    "reddit_categories": {
+      "Celebrity & Entertainment": [
+        "movies",
+        "popculturechat",
+        "Fauxmoi",
+        "BollyBlindsNGossip",
+        "kpop"
+      ],
+      "Apple & PC Hardware": [
+        "apple",
+        "macbook",
+        "macgaming",
+        "pcgaming",
+        "Windows11",
+        "Alienware",
+        "GamingLaptops"
+      ],
+      "Phones, Watches & Tech": [
+        "Android",
+        "iphone",
+        "AppleWatch",
+        "GalaxyWatch",
+        "Watches",
+        "gadgets",
+        "technology"
+      ],
+      "AI & LLMs": [
+        "ClaudeCode",
+        "ClaudeAI",
+        "ChatGPT",
+        "artificial"
+      ],
+      "Comedy & Curiosities": [
+        "funny",
+        "dadjokes",
+        "Jokes",
+        "darkjokes",
+        "todayilearned",
+        "interestingasfuck",
+        "interesting",
+        "blackmagicfuckery",
+        "nextfuckinglevel"
+      ],
+      "3D Modeling & Linux": [
+        "3Dmodeling",
+        "blender",
+        "linux"
+      ],
+      "Wholesome & Memes": [
+        "wholesome",
+        "BeAmazed",
+        "MadeMeSmile",
+        "youseeingthisshit",
+        "meme",
+        "humor",
+        "dashcams",
+        "justGuysBeingDudes",
+        "Unexpected"
+      ]
+    },
+    "_queries_note": "The autonomous clip source. YouTube searches these with videoLicense=creativeCommon, so results are reusable by construction - no hand-picked URLs. Costs 100 quota units per query out of 10,000/day; keep this list short (4-6) or it will eat the budget the uploads need. Needs YOUTUBE_API_KEY.",
+    "youtube_queries": [
+      "how a synthesizer works explained",
+      "practical effects behind the scenes miniature",
+      "video game development retro hardware",
+      "archive footage 1960s everyday life",
+      "unusual musical instrument demonstration",
+      "strange natural phenomenon footage"
+    ],
+    "youtube_per_query": 8,
+    "youtube_days_back": 0,
+    "youtube_cc_only": true,
+    "_license_check_note": "Verifies every YouTube candidate via videos.list before it can be posted: keeps Creative Commons and channels marked public-domain above, drops all-rights-reserved, livestreams, premieres, private and region-blocked videos. Costs 1 quota unit per 50 clips. Turning this off means the agent posts material it has no licence to - do not.",
+    "license_check": true,
+    "max_source_seconds": 900,
+    "wikimedia_sections": [
+      "image",
+      "onthisday",
+      "mostread"
+    ],
+    "wikimedia_days_back": 2,
+    "_topics_note": "Free-text Wikipedia searches, one per line. Queries not categories: a wrong category name fails silently, a weak query obviously returns nothing. Tune these - they are the channel's subject matter.",
+    "wikipedia_queries": [
+      "practical effects filmmaking technique",
+      "film prop famous movie",
+      "filming location landmark",
+      "actor career unusual role",
+      "musical instrument unusual invention",
+      "recording studio famous album history",
+      "arcade cabinet video game hardware",
+      "video game development history console",
+      "unusual natural phenomenon",
+      "abandoned engineering structure"
+    ],
+    "per_query": 8,
+    "_free_images_note": "true = only use images served from /wikipedia/commons/ (freely licensed). false = also use locally-uploaded fair-use files: film posters, album covers, game box art, promotional stills. Those are NOT licensed for reuse and are the single most likely cause of a Content ID claim or a copyright strike on an automated channel.",
+    "free_images_only": true
+  },
+  "editorial": {
+    "_providers_note": "Tried in this order; the first with a usable API key wins, and a provider that errors (no credit, rate limit, renamed model) falls through to the next. Keys live in mken.env as ANTHROPIC_API_KEY / GEMINI_API_KEY / OPENAI_API_KEY. Gemini's flash models have a free tier, so keeping it in the list means an empty balance elsewhere cannot take the channel off the air.",
+    "providers": [
+      "gemini",
+      "anthropic",
+      "openai"
+    ],
+    "_models_note": "Verified against each vendor's docs in September 2026. Model names change often \u2014 correct them here, not in agent.py.",
+    "_gemini_models_note": "Tried in order. Every name confirmed callable on this account. The 2.5 models are deliberately absent: they return 404 'no longer available to new users' for keys created recently, so they only waste a request. Lite models go first because the free tier answers 503 'high demand' on the newest ones routinely, and a quieter model beats a longer wait. 'gemini-flash-latest' is an alias that always resolves, so the chain survives any single model being retired.",
+    "models": {
+      "gemini": [
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-3.5-flash",
+        "gemini-3.6-flash",
+        "gemini-flash-latest"
+      ],
+      "anthropic": "claude-sonnet-4-5",
+      "openai": "gpt-5.6-luna"
+    },
+    "max_candidates": 40,
+    "max_headline_chars": 90,
+    "backup_picks": 2,
+    "system_prompt": "You are the editor for Miscellaneous Ken, a short-form account that posts one genuinely surprising thing at a time. Voice: flat, deadpan, factual. The headline states what happened with zero hype - no 'you won't believe', no 'this is insane', no rhetorical questions, no clickbait ellipses. Assume the viewer is smart and slightly bored. Prefer stories that are visually legible in a few seconds without narration: something moves, something is revealed, something is at an unexpected scale. Prefer novelty and specificity over importance - a weird engineering fact beats a routine headline. Reject anything that needs prior context to land, anything where the clip is just a talking head, and anything already saturated on social. Captions are one or two flat sentences that add something the headline does not; the description carries the source credit automatically, so do not write one."
+  },
+  "story": {
+    "_note": "The image-story format (render_story.py): headline + comparison images + commentary on a card, with a looping mascot underneath. 'mascot' is the cat loop - any short video; it is looped to fill the duration.",
+    "enabled": true,
+    "mascot": "assets/mascot.mp4",
+    "duration_seconds": 12,
+    "max_images": 2
+  },
+  "audio": {
+    "_note": "Royalty-free music only. Trending/commercial tracks can only be added legally through the YouTube app's Shorts editor, which the Data API cannot reach - baking one into an uploaded file invites a Content ID claim. Drop tracks into assets/music/<mood>/. Claude picks the mood per story.",
+    "enabled": true,
+    "library_dir": "assets/music",
+    "moods": [
+      "eerie",
+      "tense",
+      "upbeat",
+      "playful",
+      "wistful",
+      "awe",
+      "neutral"
+    ],
+    "music_volume": 0.2,
+    "source_audio_volume": 1,
+    "fade_out_seconds": 1.5,
+    "manual_track": "assets/music/dramatic/Hall of the Mountain King - Kevin MacLeod.mp3",
+    "manual_track_start_seconds": 78,
+    "manual_track_credit": "\"Hall of the Mountain King\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/",
+    "_manual_track_note": "Fixed backing track for posts you add by hand (Reddit imports and local uploads). Mood detection still runs and is recorded, but this track is used instead. Clear manual_track to go back to mood-based selection."
+  },
+  "notify": {
+    "_note": "Telegram alerts straight from agent.py, so the pipeline can run without n8n. Needs TELEGRAM_BOT_TOKEN in the environment. 'on' accepts any of: failure, empty, success.",
+    "enabled": true,
+    "telegram_chat_id": "5883553130",
+    "on": [
+      "failure",
+      "empty"
+    ]
+  },
+  "posting": {
+    "platform": "youtube_shorts",
+    "clips_per_run": 1,
+    "max_clip_seconds": 30,
+    "max_download_attempts": 3,
+    "cookies_file": "",
+    "_privacy_note": "Set to 'private' for testing - the upload is real but only you can see it. Change to 'public' when you are ready to actually publish.",
+    "privacy": "public",
+    "category_id": "25",
+    "_encoder_note": "auto = hardware (h264_videotoolbox) on macOS, else libx264. Force with 'libx264' if you see quality problems; video_bitrate only applies to the hardware path, crf/x264_preset only to the software one.",
+    "encoder": "auto",
+    "fps": 30,
+    "video_bitrate": "6M",
+    "x264_preset": "veryfast",
+    "crf": 20,
+    "tags": [
+      "shorts",
+      "news",
+      "interesting",
+      "miscellaneousken"
+    ]
+  },
+  "layout": {
+    "canvas_width": 1080,
+    "canvas_height": 1920,
+    "background": "#000000",
+    "side_margin": 72,
+    "video_margin": 36,
+    "vertical_bias": 0.38,
+    "avatar_size": 96,
+    "avatar_zoom": 1.25,
+    "avatar_trim": true,
+    "header_gap": 22,
+    "name_size": 44,
+    "handle_size": 36,
+    "name_color": "#FFFFFF",
+    "handle_color": "#8B98A5",
+    "verified_color": "#1D9BF0",
+    "verified_size": 40,
+    "header_to_headline": 48,
+    "headline_size": 76,
+    "headline_color": "#FFFFFF",
+    "headline_line_spacing": 14,
+    "headline_wrap_chars": 0,
+    "headline_uppercase": true,
+    "headline_to_video": 52,
+    "video_aspect": "auto",
+    "video_fit": "auto",
+    "corner_radius": 40,
+    "border_width": 6,
+    "border_color": "#1d9bf0",
+    "mono_font": "/System/Library/Fonts/Menlo.ttc#1",
+    "ui_font": ""
+  },
+  "story_layout": {
+    "_note": "Overrides for render_story.py. The mascot video fills the whole background. background_dim darkens it; card_opacity <1 makes the card translucent glass. background_zoom + anchors crop a corner watermark out of frame (anchor 0 = top/left, 1 = bottom/right).",
+    "card_opacity": 0.82,
+    "background_dim": 0.38,
+    "background_zoom": 1.2,
+    "background_anchor_x": 0.12,
+    "background_anchor_y": 0.1,
+    "vertical_bias": 0.42,
+    "template": "auto",
+    "theme": "auto",
+    "show_subscribe": false,
+    "_template_note": "template: auto | reaction_card | classic. auto sends a single image with a punchline to the reaction card, pairs and text-only posts to the classic card, and splits the rest by a hash of the headline so a re-render never changes a post's look. theme auto = light for reaction, dark for classic."
+  }
+}

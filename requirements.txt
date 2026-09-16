@@ -1,0 +1,12 @@
+Pillow>=10.0
+certifi>=2024.2.2
+anthropic>=0.40
+# Optional editorial providers. Gemini needs no SDK (one plain HTTPS POST);
+# OpenAI does. Neither is required if you only use Anthropic.
+openai>=1.40
+yt-dlp>=2024.8.6
+feedparser>=6.0
+google-api-python-client>=2.140
+google-auth-httplib2>=0.2
+google-auth-oauthlib>=1.2
+requests>=2.28
